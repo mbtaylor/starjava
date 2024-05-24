@@ -2,6 +2,7 @@ package uk.ac.starlink.util;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class PrimitiveListTest extends TestCase {
 
@@ -147,7 +148,31 @@ public class PrimitiveListTest extends TestCase {
         buf.add( (byte) 0x24 );
         buf.add( (byte) 0xc2 );
         buf.add( (byte) 0xa3 );
+
+        String req = "$£";
+        String got = buf.decodeUtf8();
+
+        System.out.println( "Locale: " + java.util.Locale.getDefault() );
+        
+        examineString( "req", req );
+        examineString( "got", got );
+        assertEquals( req, got );
+
         assertEquals( "$£", buf.decodeUtf8() );
+    }
+
+    void examineString( String label, String txt ) {
+        System.out.println( label + ": " );
+        for ( int i = 0; i < txt.length(); i++ ) {
+            System.out.println( "\t"
+                + "chr " + i + ": "
+                + "0x" + Integer.toHexString((int) txt.charAt(i)) + "\t"
+                + "0x" + Integer.toHexString(txt.codePointAt(i)) + "\t"
+                + ">" + txt.charAt(i) + "<" + "\t"
+            );
+        }
+        System.out.println( "\tgetBytes:\t" + Arrays.toString( txt.getBytes() ) );
+        System.out.println( "\tgetBytes(UTF8)\t" + Arrays.toString( txt.getBytes( StandardCharsets.UTF_8 ) ) );
     }
 
     private Object addList( PrimitiveList list1, PrimitiveList list2 ) {
