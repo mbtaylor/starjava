@@ -149,7 +149,8 @@ public class PrimitiveListTest extends TestCase {
         buf.add( (byte) 0xc2 );
         buf.add( (byte) 0xa3 );
 
-        String req = "$£";
+        // String req = "$£";
+        String req = "\u0024\u00a3";
         String got = buf.decodeUtf8();
 
         System.out.println( "Locale: " + java.util.Locale.getDefault() );
