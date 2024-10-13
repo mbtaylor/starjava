@@ -2,7 +2,6 @@ package uk.ac.starlink.util;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 public class PrimitiveListTest extends TestCase {
 
@@ -148,30 +147,7 @@ public class PrimitiveListTest extends TestCase {
         buf.add( (byte) 0x24 );
         buf.add( (byte) 0xc2 );
         buf.add( (byte) 0xa3 );
-
-        // String req = "$£";
-        String req = new String( new char[] { (char) 0x24, (char) 0xa3 } );
-        String got = buf.decodeUtf8();
-
-        System.out.println( "Locale: " + java.util.Locale.getDefault() );
-        
-        examineString( "req", req );
-        examineString( "got", got );
-        assertEquals( req, got );
-    }
-
-    void examineString( String label, String txt ) {
-        System.out.println( label + ": " );
-        for ( int i = 0; i < txt.length(); i++ ) {
-            System.out.println( "\t"
-                + "chr " + i + ": "
-                + "0x" + Integer.toHexString((int) txt.charAt(i)) + "\t"
-                + "0x" + Integer.toHexString(txt.codePointAt(i)) + "\t"
-                + ">" + txt.charAt(i) + "<" + "\t"
-            );
-        }
-        System.out.println( "\tgetBytes:\t" + Arrays.toString( txt.getBytes() ) );
-        System.out.println( "\tgetBytes(UTF8)\t" + Arrays.toString( txt.getBytes( StandardCharsets.UTF_8 ) ) );
+        assertEquals( "\u0024\u00a3", buf.decodeUtf8() );
     }
 
     private Object addList( PrimitiveList list1, PrimitiveList list2 ) {
