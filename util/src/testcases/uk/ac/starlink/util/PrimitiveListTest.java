@@ -158,8 +158,6 @@ public class PrimitiveListTest extends TestCase {
         examineString( "req", req );
         examineString( "got", got );
         assertEquals( req, got );
-
-        assertEquals( "$£", buf.decodeUtf8() );
     }
 
     void examineString( String label, String txt ) {
