@@ -87,6 +87,11 @@ public class CdfStarTable extends AbstractStarTable {
          * count as such, but it makes sense to use the longest record
          * count of any of the variables (typically you'd expect the
          * record count to be the same for all variables). */
+
+        // No no no, this is all wrong.
+        // There may be multiple "tables" in a CDF file, for STIL's POV.
+        // What I should do is to identify different variables that show up
+        // as DEPEND_0 targets and group the variables together accordingly.
         long nrow = 0;
         for ( int iv = 0; iv < vars_.length; iv++ ) {
             nrow = Math.max( nrow, vars_[ iv ].getRecordCount() );
